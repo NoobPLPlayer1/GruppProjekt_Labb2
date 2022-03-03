@@ -1,0 +1,7 @@
+npm i express @notionhq/client
+npm init -y
+npm i --save-dev nodemon
+npm i dotenv
+npm i ejs
+
+https://www.youtube.com/watch?v=zVfVLBjQuSA
