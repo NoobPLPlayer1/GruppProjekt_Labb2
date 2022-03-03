@@ -5,3 +5,5 @@ npm i dotenv
 npm i ejs
 
 https://www.youtube.com/watch?v=zVfVLBjQuSA
+
+nmp start // för att köra
