@@ -1,21 +1,21 @@
 {
-  "name": "notion-project",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "myapp",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "node index",
-    "devStart": "nodemon server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@notionhq/client": "^0.1.9",
-    "dotenv": "^9.0.2",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "@notionhq/client": "^1.0.1",
+    "next": "12.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "eslint": "8.10.0",
+    "eslint-config-next": "12.1.0"
   }
 }
