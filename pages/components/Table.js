@@ -4,8 +4,7 @@ function Table(props) {
     const GetFieldAccess = (name, field) =>
     {
         let props = field.properties[name];
-        let type = props.type;
-        console.log(props);
+        let type = props?.type;
         if(type == "rich_text")
         {
             return props["rich_text"]["0"]["plain_text"];
@@ -31,7 +30,17 @@ function Table(props) {
         }
         if(type == "date")
         {
-            return props["start"];
+            var start = props.date.start;
+            var end = props.date.end;
+            if(start && end){
+                return start + " until " + end;
+            }
+            else if(start){
+                return start
+            }
+            else if(end){
+                return end
+            }
         }
         if(type == "relation")
         {

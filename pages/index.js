@@ -9,7 +9,7 @@ const timereportId = "8acace5aa128437da75c516327908aca";
 export default function Home({ results }) {
 
     useEffect(() => {
-        console.log(results);
+        //console.log(results);
     })
 
 
@@ -45,7 +45,7 @@ export default function Home({ results }) {
     return (
         <div>
             <Table 
-            fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan", "Timereports"]} 
+            fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} 
             pages = {{}}
             database = {results} />
 
@@ -70,6 +70,18 @@ export async function getStaticProps() {
     const response = await notion.databases.query({
         database_id: databaseId,
 
+    });
+
+    var pages = [];
+
+    var keys = Object.keys(response.results[0].properties);
+
+    keys.forEach((key) => {
+        var res = response.results[0].properties[key];
+        if(res.type == 'date'){
+            console.log(res);
+            pages.push(key)
+        }
     });
 
     //console.log(response);
