@@ -2,10 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\pages",
+    "\\pages\\api",
     "\\pages\\components",
     "\\public",
     "\\styles"
   ],
-  "SelectedNode": "\\pages\\index.js",
+  "SelectedNode": "\\pages\\api\\submit-form.js",
   "PreviewInSolutionExplorer": false
 }

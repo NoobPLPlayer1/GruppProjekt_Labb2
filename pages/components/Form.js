@@ -1,6 +1,17 @@
 import { useState } from "react";
 
-function Form() {
+function Form(props) {
+    
+    const projectNameDisplay = () => {
+        let projectnames = [];
+        props.props.forEach((project) => {
+            const path = project.properties.Projectname.title[0].plain_text;
+            projectnames.push(
+                <option value={path} key={project.id}> {path}</option>
+            );
+        });
+        return projectnames;
+    };
 
     const [date, setDate] = useState('');
     const [hour, setHour] = useState('');
@@ -56,9 +67,7 @@ function Form() {
                         choose project
                     </option>
 
-                    <option value="My first project">My first project</option>
-                    <option value="Another project">Another project</option>
-                    <option value="The best project">The best project</option>
+                    {projectNameDisplay()}
                 </select>
             </div>
 
