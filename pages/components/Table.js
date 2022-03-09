@@ -5,7 +5,7 @@ function Table(props) {
 
     const GetFieldAccess = (name, field) =>
     {
-        let props = field.properties[name];
+        let props = field?.properties[name];
         let type = props?.type;
         if(type == "rich_text")
         {
@@ -52,12 +52,11 @@ function Table(props) {
         return "Unknown";
     }
 
-    const [database, setDatabase] = useState(props.database);
+    const [database, setDatabase] = useState([]);
     let fields = props.fields;
 
-    useState(() => {
+    useEffect(() => {
         async function GetDatabase(){
-            
             const res = await fetch('http://localhost:3000/api/get', {
                 method: 'POST',
                 credentials:'include',
@@ -66,21 +65,12 @@ function Table(props) {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ 
-                    database: "cdae3ce226d44c21b810c95c6e86aa0c",
-                    filter: {
-                        "property": "Projectname",
-                        "title": {
-                            "contains": "first"
-                        }
-                    },
-                    sort: {
-                        "property": "Projectname",
-                        "direction": "ascending"
-                    }
+                    database: props.database,
+                    filter: props.filter,
+                    sort: props.sort,
                 })
             });
             var result = await res.json();
-            console.log(result);
 
             if (res.status === 201) {
                 setDatabase(result);
@@ -89,8 +79,10 @@ function Table(props) {
                 console.log("rip");
             }
         }
+        console.log("sendit");
         GetDatabase();
-    }, [])
+
+    },[props.filter])
 
 
     return (

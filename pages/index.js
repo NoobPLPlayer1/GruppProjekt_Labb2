@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Table from "./components/Table"; './components/Table.js'
+import SearchTable from './components/SearchTable';
 import Form from "./components/Form"; './components/Form.js'
 import { useState } from "react";
 import { notion } from './notion';
@@ -13,7 +14,7 @@ export default function Home({ results }) {
    
     return (
         <div>
-            <Table fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} database={results} />
+            <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} database={projectsId} />
             <Form props={results} />
         </div>
     )
