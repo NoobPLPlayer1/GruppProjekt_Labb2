@@ -33,6 +33,7 @@ function SearchTable(props) {
             setFilter({ property:"Status", select: { equals: status } });
         }
         setStatus(status);
+        filterUsers();
     }
     async function setUserFilter(user)
     {
@@ -71,16 +72,18 @@ function SearchTable(props) {
     useEffect(() => {
         
         async function GetData(){
-            await QueryDatabase("8acace5aa128437da75c516327908aca", undefined, undefined, setTimereports);
-            await QueryDatabase("b7a24c0cba3f4582a6b24cd4548feeaa", undefined, undefined, setUsers);
-            await QueryDatabase(props.database, filter, sort, setDatabase);
+            await Promise.all([
+                QueryDatabase("8acace5aa128437da75c516327908aca", undefined, undefined, setTimereports),
+                QueryDatabase("b7a24c0cba3f4582a6b24cd4548feeaa", undefined, undefined, setUsers),
+                QueryDatabase(props.database, filter, sort, setDatabase)
+            ]);
             
         }
         GetData();
     }, [filter, sort])
     useEffect(() => {
         filterUsers();
-    }, [user])
+    }, [user, database])
 
 
     return (
@@ -114,7 +117,7 @@ function SearchTable(props) {
                     name="user"
                     id="user"
                     value={user}
-                    onChange={(e) => setUserFilter(e.target.value)}
+                    onChange={(e) => setUser(e.target.value)}
                 >
                     <option value="All">
                         All
