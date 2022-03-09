@@ -22,6 +22,7 @@ function SearchTable(props) {
     return (
         <div>
             <form>
+                <label htmlFor="status">Show Status: </label>
                 <select
                     name="status"
                     id="status"
