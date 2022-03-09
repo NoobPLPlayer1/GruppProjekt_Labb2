@@ -1,9 +1,12 @@
 import Table from "./Table";
 import {useEffect, useState} from 'react'
+import { QueryDatabase } from '../notion'
 
 function SearchTable(props) {
 
-    const [filter, setFilter] = useState();
+    const [database, setDatabase] = useState([]);
+    const [filter, setFilter] = useState(undefined);
+    const [sort, setSort] = useState(undefined);
     const [status, setStatus] = useState("All");
 
     function setStatusFilter(status)
@@ -18,6 +21,12 @@ function SearchTable(props) {
         }
         setStatus(status);
     }
+    
+    useEffect(() => {
+        QueryDatabase(props.database, filter, sort, setDatabase);
+
+    }, [filter])
+
 
     return (
         <div>
@@ -44,7 +53,7 @@ function SearchTable(props) {
                     </option>
                 </select>
             </form>
-            <Table fields={props.fields} database={props.database} filter={filter} />
+            {<Table fields={props.fields} database={database} filter={filter} />}
         </div>
     )
 }

@@ -52,36 +52,12 @@ function Table(props) {
         return "Unknown";
     }
 
-    const [database, setDatabase] = useState([]);
+    useEffect(()=> {
+
+    }, [props.database])
+
+    let database = props.database;
     let fields = props.fields;
-
-    useEffect(() => {
-        async function GetDatabase(){
-            const res = await fetch('http://localhost:3000/api/get', {
-                method: 'POST',
-                credentials:'include',
-                mode: 'cors',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 
-                    database: props.database,
-                    filter: props.filter,
-                    sort: props.sort,
-                })
-            });
-            var result = await res.json();
-
-            if (res.status === 201) {
-                setDatabase(result);
-            } else {
-                console.log("rip");
-            }
-        }
-        GetDatabase();
-
-    }, [props.filter])
-
 
     return (
         <table>
@@ -95,7 +71,7 @@ function Table(props) {
             </thead>
             <tbody>
             {
-                database.map((field) => {
+                props.database.map((field) => {
                     return (<tr key={field.id}>
                         {fields.map(element => {
                             return (<td key={element}>{GetFieldAccess(element, field)}</td>)
