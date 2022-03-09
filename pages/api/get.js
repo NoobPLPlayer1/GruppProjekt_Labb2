@@ -1,8 +1,5 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-const timereportId = "8acace5aa128437da75c516327908aca";
-import { Client } from "@notionhq/client";
-import { cors } from './cors.js'
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
+import { cors } from '../cors.js'
+import { notion } from '../notion';
 
 export default async function handler(req, res) {
     let method = req.method;

@@ -9,26 +9,26 @@ function Table(props) {
         let type = props?.type;
         if(type == "rich_text")
         {
-            return props["rich_text"]["0"]["plain_text"];
+            return props.rich_text[0].plain_text;
         }
         if(type == "title"){
-            return props["title"]["0"]["plain_text"];
+            return props.title[0].plain_text;
         }
         if(type == "rollup")
         {
-            return props["rollup"]["number"];
+            return props.rollup.number;
         }
         if(type == "formula")
         {
-            return props["formula"]["number"];
+            return props.formula.number;
         }
         if(type == "select")
         {
-            return props["select"]["name"];
+            return props.select.name;
         }
         if(type == "number")
         {
-            return props["number"];
+            return props.number;
         }
         if(type == "date")
         {
