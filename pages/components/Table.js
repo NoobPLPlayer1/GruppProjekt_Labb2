@@ -74,15 +74,13 @@ function Table(props) {
 
             if (res.status === 201) {
                 setDatabase(result);
-                console.log("ok");
             } else {
                 console.log("rip");
             }
         }
-        console.log("sendit");
         GetDatabase();
 
-    },[props.filter])
+    }, [props.filter])
 
 
     return (
@@ -98,9 +96,7 @@ function Table(props) {
             <tbody>
             {
                 database.map((field) => {
-
-
-                    return (<tr>
+                    return (<tr key={field.id}>
                         {fields.map(element => {
                             return (<td key={element}>{GetFieldAccess(element, field)}</td>)
                         })}
