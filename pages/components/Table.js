@@ -1,4 +1,6 @@
 
+import {useEffect, useState} from 'react'
+
 function Table(props) {
 
     const GetFieldAccess = (name, field) =>
@@ -50,12 +52,52 @@ function Table(props) {
         return "Unknown";
     }
 
+    const [database, setDatabase] = useState(props.database);
+    let fields = props.fields;
+
+    useState(() => {
+        async function GetDatabase(){
+            
+            const res = await fetch('http://localhost:3000/api/get', {
+                method: 'POST',
+                credentials:'include',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    database: "cdae3ce226d44c21b810c95c6e86aa0c",
+                    filter: {
+                        "property": "Projectname",
+                        "title": {
+                            "contains": "first"
+                        }
+                    },
+                    sort: {
+                        "property": "Projectname",
+                        "direction": "ascending"
+                    }
+                })
+            });
+            var result = await res.json();
+            console.log(result);
+
+            if (res.status === 201) {
+                setDatabase(result);
+                console.log("ok");
+            } else {
+                console.log("rip");
+            }
+        }
+        GetDatabase();
+    }, [])
+
 
     return (
         <table>
             <thead>
                 <tr>
-                    {props.fields.map(element => {
+                    {fields.map(element => {
 
                         return (<th key={element}>{element}</th>)
                     })}
@@ -63,12 +105,11 @@ function Table(props) {
             </thead>
             <tbody>
             {
-                props.database.map((field) => {
+                database.map((field) => {
 
 
                     return (<tr>
-                        {props.fields.map(element => {
-
+                        {fields.map(element => {
                             return (<td key={element}>{GetFieldAccess(element, field)}</td>)
                         })}
                     </tr>)
