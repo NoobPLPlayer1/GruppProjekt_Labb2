@@ -14,6 +14,7 @@ export default function Home({ results }) {
    
     return (
         <div>
+
             <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} database={projectsId} />
             <Form props={results} />
         </div>

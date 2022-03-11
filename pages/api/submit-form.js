@@ -14,19 +14,7 @@ export default async function handler(req, res) {
     try {
 
         const { date, hour, project } = JSON.parse(req.body);
-
-        let projectid;
-        switch (project) {
-            case "My first project":
-                projectid = "496bdaf8-bdce-49b3-a131-ce9d77463236";
-                break;
-            case "Another project":
-                projectid = "3fb461b3-3ac1-41da-864f-80dfe27e1ec5";
-                break;
-            case "The best project":
-                projectid = "3b31c901-c596-4df9-80ef-1c5cb1453efa";
-                break;
-        }
+   
         await notion.pages.create({
             parent: {
 
@@ -49,7 +37,7 @@ export default async function handler(req, res) {
                 Project: {
 
                     relation: [{
-                        id: projectid,
+                        id: project,
                     },
                     ],
                 },

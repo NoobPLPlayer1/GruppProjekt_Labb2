@@ -7,7 +7,7 @@ function Form(props) {
         props.props.forEach((project) => {
             const path = project.properties.Projectname.title[0].plain_text;
             projectnames.push(
-                <option value={path} key={project.id}> {path}</option>
+                <option value={project.id} key={project.id}> {path}</option>
             );
         });
         return projectnames;
@@ -27,6 +27,7 @@ function Form(props) {
 
         if (res.status === 201) {
             console.log("ok");
+            
         } else {
             console.log("rip");
         }
