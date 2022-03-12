@@ -3,7 +3,6 @@ import {useEffect, useState} from 'react'
 import { QueryDatabase } from '../notion'
 
 function SearchTable(props) {
-
     const [database, setDatabase] = useState([]);
     const [items, setItems] = useState([]);
     const [filter, setFilter] = useState(undefined);
@@ -12,15 +11,6 @@ function SearchTable(props) {
     const [user, setUser] = useState("All");
     const [users, setUsers] = useState([]);
     const [timereports, setTimereports] = useState([]);
-
-    /*function setUsers(list)
-    {
-        var map = [];
-        list.forEach((item) => {
-            map[item.id] = item;
-        })
-        setUsersRaw(map)
-    }/**/
 
     function setStatusFilter(status)
     {
@@ -33,11 +23,6 @@ function SearchTable(props) {
             setFilter({ property:"Status", select: { equals: status } });
         }
         setStatus(status);
-        filterUsers();
-    }
-    async function setUserFilter(user)
-    {
-        setUser(user);
         filterUsers();
     }
 

@@ -10,8 +10,6 @@ const timereportId = "8acace5aa128437da75c516327908aca";
 
 
 export default function Home({ results }) {
-
-   
     return (
         <div>
 
@@ -26,7 +24,6 @@ export async function getServerSideProps() {
     const databaseId = projectsId;
     const response = await notion.databases.query({
         database_id: databaseId,
-
     });
     
     //console.log(response);
