@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
     await cors(req, res)
 
-    if (method !== 'POST') { // Kollar att request typen är korrekt
+    if (method !== 'POST') { 
         return res
             .status(405)
             .json({ message: `${method} requests are not allowed` });
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
             filter: filter,
             sort: sort,
         });
-        res.status(201).json(response.results); // ".json(response.results)" skickar tillbaka resultatet
+        res.status(201).json(response.results); 
     } catch (error) {
         res.status(500).json({ msg: 'There was an error' });
     }

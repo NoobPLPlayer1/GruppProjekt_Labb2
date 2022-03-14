@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 function Form(props) {
-    
-    const projectNameDisplay = () => {
+
+
+    const projectNameDisplay = () => { //save in a list different options which contains name and id of each project
+        
         let projectnames = [];
         props.props.forEach((project) => {
             const path = project.properties.Projectname.title[0].plain_text;
@@ -17,24 +19,24 @@ function Form(props) {
     const [hour, setHour] = useState('');
     const [project, setProject] = useState('');
 
+    const submitForm = async (e) => { //When we click on submit then we will send the result of each field to ourselves
 
-    const submitForm = async (e) => {
         e.preventDefault();
         const res = await fetch('http://localhost:3000/api/submit-form', {
             method: 'POST',
-            body: JSON.stringify({ date, hour, project }),
+            body: JSON.stringify({ date, hour, project }), //This is where we send the parameters to our selves like a payload
         });
 
         if (res.status === 201) {
-            console.log("ok");
+            console.log("Done!");
             
         } else {
-            console.log("rip");
+            console.log("Error!");
         }
     };
 
     return (
-        <form className="hej2" onSubmit={submitForm}>
+        <form className="hej2" onSubmit={submitForm}> {/*when we click on submit then run function submitForm above*/}
             <h1 className="hej3">Rapportera tid</h1>
             <div>
                 <label htmlFor="date">Skriv in datum</label>
@@ -42,8 +44,9 @@ function Form(props) {
                     type="date"
                     id="datum"
                     name="datum"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    
+                    value={date} 
+                    onChange={(e) => setDate(e.target.value)} 
                     required
                 />
 
@@ -68,7 +71,7 @@ function Form(props) {
                         choose project
                     </option>
 
-                    {projectNameDisplay()}
+                    {projectNameDisplay()} {/* Here you show the name of each project from the project list first created */}
                 </select>
             </div>
 

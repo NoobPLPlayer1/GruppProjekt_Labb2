@@ -1,5 +1,5 @@
 import Table from "./Table";
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { QueryDatabase } from '../notion'
 
 function SearchTable(props) {
@@ -12,69 +12,67 @@ function SearchTable(props) {
     const [users, setUsers] = useState([]); // Hämtade giltiga användare
     const [timereports, setTimereports] = useState([]); // Hämtade tidsrapporteringar
 
-    function setStatusFilter(status)
-    {
-        if(status == "All") // Hoppa över status filter
+    function setStatusFilter(status) {
+        if (status == "All") // Hoppa över status filter
         {
             setFilter(undefined);
         }
         else // Filtrerar på status
         {
-            setFilter({ property:"Status", select: { equals: status } }); 
+            setFilter({ property: "Status", select: { equals: status } });
         }
         setStatus(status);
         filterUsers();
     }
 
-    async function filterUsers(){
+    async function filterUsers() {
         var items = [];
         database.forEach((row) => { // Kollar för varje hämtat projekt
             var result = false;
             var selectedUser = null;
-            if(user != "All") // Om all är selected så hoppar vi över checken
-            { 
+            if (user != "All") // Om all är selected så hoppar vi över checken
+            {
                 users.forEach((item) => { // Hämtar id med persons namn
-                    if(item.properties.Name.title[0].plain_text == user){
+                    if (item.properties.Name.title[0].plain_text == user) {
                         selectedUser = item.id;
                     }
                 })
                 timereports.forEach((report) => { // Kollar om det finns någon tidsrapportering som innehåller både person och projekt
-                    if(report.properties.Project.relation.length > 0 && row.id == report.properties.Project.relation[0].id && (report.properties.Person.relation.length > 0 && selectedUser == report.properties.Person.relation[0].id || selectedUser == "All"))
-                    {
+                    if (report.properties.Project.relation.length > 0 && row.id == report.properties.Project.relation[0].id && (report.properties.Person.relation.length > 0 && selectedUser == report.properties.Person.relation[0].id || selectedUser == "All")) {
                         console.log(report.properties.Person);
                         result = true;
                     }
                 })
             }
-            else{
+            else {
                 result = true;
             }
-            if(result) // Om Projektet bör visas lägger vi till det i 'items'
+            if (result) // Om Projektet bör visas lägger vi till det i 'items'
             {
                 items.push(row);
             }
         });
         setItems(items);
     }
-    
+
     useEffect( // Körs varje gång då antingen filter eller sortering ändras
-    () => {
-        
-        async function GetData(){
-            // 'Promise.all()' väntar på att alla 'QueryDatabase's ska bli klar
-            await Promise.all([
-                QueryDatabase("8acace5aa128437da75c516327908aca", undefined, undefined, setTimereports),
-                QueryDatabase("b7a24c0cba3f4582a6b24cd4548feeaa", undefined, undefined, setUsers),
-                QueryDatabase(props.database, filter, sort, setDatabase)
-            ]);
-            
-        }
-        GetData();
-    }, [filter, sort])
+        () => {
+
+            async function GetData() {
+                // 'Promise.all()' väntar på att alla 'QueryDatabase's ska bli klar
+                await Promise.all([
+                    QueryDatabase("8acace5aa128437da75c516327908aca", undefined, undefined, setTimereports),
+                    QueryDatabase("b7a24c0cba3f4582a6b24cd4548feeaa", undefined, undefined, setUsers),
+                    QueryDatabase(props.database, filter, sort, setDatabase)
+                ]);
+
+            }
+            GetData();
+        }, [filter, sort])
     useEffect( // Körs varje gång då antingen användare eller projekt hämtas
-    () => {
-        filterUsers();
-    }, [user, database])
+        () => {
+            filterUsers();
+        }, [user, database])
 
 
     return (
