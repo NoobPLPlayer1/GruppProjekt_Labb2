@@ -41,7 +41,7 @@ function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
                     Signed out
                 </option>
                 {users.map((user) => {
-                    return <option value={user.properties.Name.title[0].plain_text}>{user.properties.Name.title[0].plain_text}</option>
+                    return <option key={user.id} value={user.properties.Name.title[0].plain_text}>{user.properties.Name.title[0].plain_text}</option>
                 })}
             </select>
         </form>
