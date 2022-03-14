@@ -8,7 +8,7 @@ function SearchTable(props) {
     const [filter, setFilter] = useState(undefined); // Filter som användes när vi hämtade projekt (undefined = inget filter)
     const [sort, setSort] = useState(undefined); // Sorteringen som användes när vi hämtade projekt (undefined = ingen sorteringen)
     const [status, setStatus] = useState("All"); // Användarens valda status
-    const [user, setUser] = useState("All"); // Användarens valda användare
+    const [user, setUser] = useState("Me"); // Användarens valda användare
     const [users, setUsers] = useState([]); // Hämtade giltiga användare
     const [timereports, setTimereports] = useState([]); // Hämtade tidsrapporteringar
 
@@ -27,19 +27,21 @@ function SearchTable(props) {
 
     async function filterUsers() {
         var items = [];
+        var currentUser = user == "Me" ? props.CurrentUser : user;
+        console.log(props);
         database.forEach((row) => { // Kollar för varje hämtat projekt
             var result = false;
             var selectedUser = null;
-            if (user != "All") // Om all är selected så hoppar vi över checken
+
+            if (currentUser != "All") // Om all är selected så hoppar vi över checken
             {
                 users.forEach((item) => { // Hämtar id med persons namn
-                    if (item.properties.Name.title[0].plain_text == user) {
+                    if (item.properties.Name.title[0].plain_text == currentUser) {
                         selectedUser = item.id;
                     }
                 })
                 timereports.forEach((report) => { // Kollar om det finns någon tidsrapportering som innehåller både person och projekt
                     if (report.properties.Project.relation.length > 0 && row.id == report.properties.Project.relation[0].id && (report.properties.Person.relation.length > 0 && selectedUser == report.properties.Person.relation[0].id || selectedUser == "All")) {
-                        console.log(report.properties.Person);
                         result = true;
                     }
                 })
@@ -69,10 +71,15 @@ function SearchTable(props) {
             }
             GetData();
         }, [filter, sort])
-    useEffect( // Körs varje gång då antingen användare eller projekt hämtas
-        () => {
-            filterUsers();
-        }, [user, database])
+        useEffect( // Körs varje gång då antingen användare eller projekt hämtas
+            () => {
+                filterUsers();
+            }, [user, database])
+
+        useEffect( // Körs varje gång då antingen användare eller projekt hämtas
+            () => {
+                filterUsers();
+            }, [])
 
 
     return (
@@ -107,9 +114,13 @@ function SearchTable(props) {
                     id="user"
                     value={user}
                     onChange={(e) => setUser(e.target.value)}
+                    onLoad={(e) => setUser("Me")} // Sätter användare direkt så att projekt laddas korrekt
                 >
                     <option value="All">
                         All
+                    </option>
+                    <option value="Me">
+                        Me
                     </option>
                     {users.map((user) => {
                         return <option>{user.properties.Name.title[0].plain_text}</option>

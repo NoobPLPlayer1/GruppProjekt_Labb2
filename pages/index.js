@@ -11,7 +11,7 @@ const timereportId = "8acace5aa128437da75c516327908aca";
 
 
 export default function Home({ CurrentUser, SetCurrentUser, results }) {
-    return  <>{ (CurrentUser == "Signed out" ? <LoginHome SetCurrentUser={SetCurrentUser}/> : <ManageHome results={results} />) }</>
+    return  <>{ (CurrentUser == "Signed out" ? <LoginHome SetCurrentUser={SetCurrentUser}/> : <ManageHome results={results} CurrentUser={CurrentUser} />) }</>
 }
 
 function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
@@ -51,9 +51,9 @@ function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
     </div>)
 }
 
-function ManageHome({ results }){ // Huvudsidan
+function ManageHome({ results, CurrentUser }){ // Huvudsidan
     return <div>
-        <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} database={projectsId} />
+        <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} database={projectsId} CurrentUser={CurrentUser} />
         <Form props={results} /> 
     </div>
 }
