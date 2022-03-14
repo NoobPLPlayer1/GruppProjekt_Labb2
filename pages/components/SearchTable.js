@@ -3,24 +3,24 @@ import {useEffect, useState} from 'react'
 import { QueryDatabase } from '../notion'
 
 function SearchTable(props) {
-    const [database, setDatabase] = useState([]);
-    const [items, setItems] = useState([]);
-    const [filter, setFilter] = useState(undefined);
-    const [sort, setSort] = useState(undefined);
-    const [status, setStatus] = useState("All");
-    const [user, setUser] = useState("All");
-    const [users, setUsers] = useState([]);
-    const [timereports, setTimereports] = useState([]);
+    const [database, setDatabase] = useState([]); // Hämtade projekt
+    const [items, setItems] = useState([]); // Projekt som visas
+    const [filter, setFilter] = useState(undefined); // Filter som användes när vi hämtade projekt (undefined = inget filter)
+    const [sort, setSort] = useState(undefined); // Sorteringen som användes när vi hämtade projekt (undefined = ingen sorteringen)
+    const [status, setStatus] = useState("All"); // Användarens valda status
+    const [user, setUser] = useState("All"); // Användarens valda användare
+    const [users, setUsers] = useState([]); // Hämtade giltiga användare
+    const [timereports, setTimereports] = useState([]); // Hämtade tidsrapporteringar
 
     function setStatusFilter(status)
     {
-        if(status == "All")
+        if(status == "All") // Hoppa över status filter
         {
             setFilter(undefined);
         }
-        else
+        else // Filtrerar på status
         {
-            setFilter({ property:"Status", select: { equals: status } });
+            setFilter({ property:"Status", select: { equals: status } }); 
         }
         setStatus(status);
         filterUsers();
@@ -28,10 +28,11 @@ function SearchTable(props) {
 
     async function filterUsers(){
         var items = [];
-        database.forEach((row) => {
+        database.forEach((row) => { // Kollar för varje hämtat projekt
             var result = false;
             var selectedUser = null;
-            if(user != "All") {
+            if(user != "All") // Om all är selected så hoppar vi över checken
+            { 
                 users.forEach((item) => { // Hämtar id med persons namn
                     if(item.properties.Name.title[0].plain_text == user){
                         selectedUser = item.id;
@@ -48,16 +49,19 @@ function SearchTable(props) {
             else{
                 result = true;
             }
-            if(result){
+            if(result) // Om Projektet bör visas lägger vi till det i 'items'
+            {
                 items.push(row);
             }
         });
         setItems(items);
     }
     
-    useEffect(() => {
+    useEffect( // Körs varje gång då antingen filter eller sortering ändras
+    () => {
         
         async function GetData(){
+            // 'Promise.all()' väntar på att alla 'QueryDatabase's ska bli klar
             await Promise.all([
                 QueryDatabase("8acace5aa128437da75c516327908aca", undefined, undefined, setTimereports),
                 QueryDatabase("b7a24c0cba3f4582a6b24cd4548feeaa", undefined, undefined, setUsers),
@@ -67,7 +71,8 @@ function SearchTable(props) {
         }
         GetData();
     }, [filter, sort])
-    useEffect(() => {
+    useEffect( // Körs varje gång då antingen användare eller projekt hämtas
+    () => {
         filterUsers();
     }, [user, database])
 
