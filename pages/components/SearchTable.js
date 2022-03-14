@@ -38,8 +38,9 @@ function SearchTable(props) {
                     }
                 })
                 timereports.forEach((report) => { // Kollar om det finns någon tidsrapportering som innehåller både person och projekt
-                    if(row.id == report.properties.Project.relation[0].id && (selectedUser == report.properties.Person.relation[0].id || selectedUser == "All"))
+                    if(report.properties.Project.relation.length > 0 && row.id == report.properties.Project.relation[0].id && (report.properties.Person.relation.length > 0 && selectedUser == report.properties.Person.relation[0].id || selectedUser == "All"))
                     {
+                        console.log(report.properties.Person);
                         result = true;
                     }
                 })
