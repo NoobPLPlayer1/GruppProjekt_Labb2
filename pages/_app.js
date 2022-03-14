@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react'
 
 function MyApp({ Component, pageProps }) {
     const [currentUser, setCurrentUser] = useState("Signed out"); // Hämtade giltiga användare
-    useEffect( // Körs varje gång då antingen filter eller sortering ändras
+    useEffect( // Körs varje gång då antingen användare ändras
         () => {
             console.log(currentUser);
         }, [currentUser])

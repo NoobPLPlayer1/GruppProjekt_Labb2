@@ -1,8 +1,8 @@
 import Table from "./Table";
 import { useEffect, useState } from 'react'
-import { QueryDatabase } from '../notion'
+import { QueryDatabase, projectsId, peopleId, timereportId } from '../notion'
 
-function SearchTable(props) {
+function SearchTable({fields, CurrentUser}) {
     const [database, setDatabase] = useState([]); // Hämtade projekt
     const [items, setItems] = useState([]); // Projekt som visas
     const [filter, setFilter] = useState(undefined); // Filter som användes när vi hämtade projekt (undefined = inget filter)
@@ -27,8 +27,7 @@ function SearchTable(props) {
 
     async function filterUsers() {
         var items = [];
-        var currentUser = user == "Me" ? props.CurrentUser : user;
-        console.log(props);
+        var currentUser = user == "Me" ? CurrentUser : user;
         database.forEach((row) => { // Kollar för varje hämtat projekt
             var result = false;
             var selectedUser = null;
@@ -63,9 +62,9 @@ function SearchTable(props) {
             async function GetData() {
                 // 'Promise.all()' väntar på att alla 'QueryDatabase's ska bli klar
                 await Promise.all([
-                    QueryDatabase("8acace5aa128437da75c516327908aca", undefined, undefined, setTimereports),
-                    QueryDatabase("b7a24c0cba3f4582a6b24cd4548feeaa", undefined, undefined, setUsers),
-                    QueryDatabase(props.database, filter, sort, setDatabase)
+                    QueryDatabase(timereportId, undefined, undefined, setTimereports),
+                    QueryDatabase(peopleId, undefined, undefined, setUsers),
+                    QueryDatabase(projectsId, filter, sort, setDatabase)
                 ]);
 
             }
@@ -120,14 +119,16 @@ function SearchTable(props) {
                         All
                     </option>
                     <option value="Me">
-                        Me
+                        Me ({CurrentUser})
                     </option>
                     {users.map((user) => {
-                        return <option>{user.properties.Name.title[0].plain_text}</option>
+                        const userName = user.properties.Name.title[0].plain_text;
+                        if(userName != CurrentUser)
+                            return <option key={user.id}>{userName}</option>
                     })}
                 </select>
             </form>
-            {<Table fields={props.fields} database={items} filter={filter} />}
+            {<Table fields={fields} database={items} filter={filter} />}
         </div>
     )
 }

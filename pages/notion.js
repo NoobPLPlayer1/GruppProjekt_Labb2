@@ -1,5 +1,8 @@
 
 import { Client } from "@notionhq/client";
+export const projectsId = "cdae3ce226d44c21b810c95c6e86aa0c";
+export const peopleId = "b7a24c0cba3f4582a6b24cd4548feeaa";
+export const timereportId = "8acace5aa128437da75c516327908aca";
 export const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export async function QueryDatabase(database, filter, sort, callback){
