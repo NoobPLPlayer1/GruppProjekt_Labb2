@@ -1,7 +1,5 @@
 import {useState, useEffect} from 'react'
 import { QueryDatabase } from './notion'
-import { Redirect } from "react-router-dom";
-import Link from 'next/link';
 import SearchTable from './components/SearchTable';
 import Form from "./components/Form"; './components/Form.js'
 import { notion, projectsId } from './notion';

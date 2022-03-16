@@ -73,12 +73,7 @@ function SearchTable({fields, CurrentUser}) {
         useEffect( // Körs varje gång då antingen användare eller projekt hämtas
             () => {
                 filterUsers();
-            }, [user, database])
-
-        useEffect( // Körs varje gång då antingen användare eller projekt hämtas
-            () => {
-                filterUsers();
-            }, [])
+            }, [user, users, timereports, database, CurrentUser])
 
 
     return (
