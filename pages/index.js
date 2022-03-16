@@ -39,7 +39,7 @@ function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
                     Signed out
                 </option>
                 {users.map((user) => {
-                    return <option key={user.id} value={user.properties.Name.title[0].plain_text}>{user.properties.Name.title[0].plain_text}</option>
+                    return <option key={user.id} value={user.id}>{user.properties.Name.title[0].plain_text}</option>
                 })}
             </select>
         </form>
@@ -49,7 +49,7 @@ function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
 function ManageHome({ results, CurrentUser }){ // Huvudsidan
     return <div>
         <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} CurrentUser={CurrentUser} />
-        <Form props={results} /> 
+        <Form props={{results: results, user: CurrentUser}} /> 
     </div>
 }
 

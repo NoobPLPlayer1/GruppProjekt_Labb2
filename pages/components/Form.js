@@ -6,7 +6,7 @@ function Form(props) {
     const projectNameDisplay = () => { //save in a list different options which contains name and id of each project
         
         let projectnames = [];
-        props.props.forEach((project) => {
+        props.props.results.forEach((project) => {
             const path = project.properties.Projectname.title[0].plain_text;
             projectnames.push(
                 <option value={project.id} key={project.id}> {path}</option>
@@ -18,18 +18,18 @@ function Form(props) {
     const [date, setDate] = useState('');
     const [hour, setHour] = useState('');
     const [project, setProject] = useState('');
+    console.log(props);
+    const user = props.props.user;
 
     const submitForm = async (e) => { //When we click on submit then we will send the result of each field to ourselves
-
         e.preventDefault();
         const res = await fetch('http://localhost:3000/api/submit-form', {
             method: 'POST',
-            body: JSON.stringify({ date, hour, project }), //This is where we send the parameters to our selves like a payload
+            body: JSON.stringify({ date, hour, project, user }), //This is where we send the parameters to our selves like a payload
         });
 
         if (res.status === 201) {
             console.log("Done!");
-            
         } else {
             console.log("Error!");
         }

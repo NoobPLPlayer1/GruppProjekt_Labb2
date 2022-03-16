@@ -12,6 +12,8 @@ function SearchTable({fields, CurrentUser}) {
     const [users, setUsers] = useState([]); // Hämtade giltiga användare
     const [timereports, setTimereports] = useState([]); // Hämtade tidsrapporteringar
 
+    var userNames = {};
+
     function setStatusFilter(status) {
         if (status == "All") // Hoppa över status filter
         {
@@ -28,19 +30,14 @@ function SearchTable({fields, CurrentUser}) {
     async function filterUsers() {
         var items = [];
         var currentUser = user == "Me" ? CurrentUser : user;
+        console.log(currentUser);
         database.forEach((row) => { // Kollar för varje hämtat projekt
             var result = false;
-            var selectedUser = null;
 
             if (currentUser != "All") // Om all är selected så hoppar vi över checken
             {
-                users.forEach((item) => { // Hämtar id med persons namn
-                    if (item.properties.Name.title[0].plain_text == currentUser) {
-                        selectedUser = item.id;
-                    }
-                })
                 timereports.forEach((report) => { // Kollar om det finns någon tidsrapportering som innehåller både person och projekt
-                    if (report.properties.Project.relation.length > 0 && row.id == report.properties.Project.relation[0].id && (report.properties.Person.relation.length > 0 && selectedUser == report.properties.Person.relation[0].id || selectedUser == "All")) {
+                    if (report.properties.Project.relation.length > 0 && row.id == report.properties.Project.relation[0].id && (report.properties.Person.relation.length > 0 && currentUser == report.properties.Person.relation[0].id)) {
                         result = true;
                     }
                 })
@@ -66,7 +63,9 @@ function SearchTable({fields, CurrentUser}) {
                     QueryDatabase(peopleId, undefined, undefined, setUsers),
                     QueryDatabase(projectsId, filter, sort, setDatabase)
                 ]);
-
+                users.forEach((p) => {
+                    userNames[p.id] = p.properties.Name.title[0].plain_text;
+                })
             }
             GetData();
         }, [filter, sort])
@@ -114,12 +113,15 @@ function SearchTable({fields, CurrentUser}) {
                         All
                     </option>
                     <option value="Me">
-                        Me ({CurrentUser})
+                        Me ({users.map((user) => {
+                        if(user.id == CurrentUser)
+                            return user.properties.Name.title[0].plain_text
+                    })})
                     </option>
                     {users.map((user) => {
                         const userName = user.properties.Name.title[0].plain_text;
-                        if(userName != CurrentUser)
-                            return <option key={user.id}>{userName}</option>
+                        if(user.id != CurrentUser)
+                            return <option key={user.id} value={user.id}>{userName}</option>
                     })}
                 </select>
             </form>

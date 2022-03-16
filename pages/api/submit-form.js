@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     try {
 
-        const { date, hour, project } = JSON.parse(req.body);
+        const { date, hour, project, user } = JSON.parse(req.body);
    
         await notion.pages.create({
             parent: {
@@ -38,6 +38,14 @@ export default async function handler(req, res) {
 
                     relation: [{
                         id: project,
+                    },
+                    ],
+                },
+
+                Person: {
+
+                    relation: [{
+                        id: user,
                     },
                     ],
                 },
