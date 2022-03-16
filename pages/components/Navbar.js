@@ -12,6 +12,9 @@ const Navbar = () => { //here you can add pages, it automatically should update 
             <Link href="/about">
                 <a>About</a>
             </Link>
+            <Link href="/manager">
+                <a>Manager</a>
+            </Link>
         </nav>
     );
 }
