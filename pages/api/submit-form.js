@@ -13,8 +13,8 @@ export default async function handler(req, res) {
 
     try {
 
-        const { date, hour, project, user, note } = JSON.parse(req.body); //here i catch everything from form
-   
+        var { date, hour, project, user, note } = JSON.parse(req.body); //here i catch everything from form
+
         await notion.pages.create({ //here i update the timereport table according to data submitted
             parent: {
 

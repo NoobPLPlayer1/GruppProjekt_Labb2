@@ -15,29 +15,31 @@ function Form(props) {
         return projectnames;
     };
 
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date().toISOString().slice(0,10)); //Here i set intial value to todays, it will never be empty
     const [hour, setHour] = useState('');
     const [project, setProject] = useState('');
     const [note, setNote] = useState('');
     const user = props.props.user;
 
     const submitForm = async (e) => { //When we click on submit then we will send the result of each field to ourselves
+        
         e.preventDefault();
         const res = await fetch('http://localhost:3000/api/submit-form', {
             method: 'POST',
-            body: JSON.stringify({ date, hour, project, user, note }), //This is where we send the parameters to our selves like a payload
+            body: JSON.stringify({ date, hour, project, user, note }), //This is where we send the parameters to our selves
         });
 
         if (res.status === 201) {
             console.log("Done!");
+            
         } else {
             console.log("Error!");
         }
     };
 
     return (
-        <form className="hej2" onSubmit={submitForm}> {/*when we click on submit then run function submitForm above*/}
-            <h1 className="hej3">Rapportera tid</h1>
+        <form className="form" onSubmit={submitForm}> {/*when we click on submit then run function submitForm above*/}
+            <h1 className="form-headline">Rapportera tid</h1>
             <div>
                 <label htmlFor="date">Skriv in datum</label>
                 <input
@@ -46,7 +48,7 @@ function Form(props) {
                     name="datum"
                     
                     value={date} 
-                    onChange={(e) => setDate(e.target.value)} 
+                    onChange={(e) => setDate(e.target.value)}
                     required
                 />
 
@@ -85,7 +87,7 @@ function Form(props) {
                 />
             </div>
 
-            <button className="hej" type="submit">
+            <button className="form-button" type="submit">
                 Submit
             </button>
         </form>
