@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
+import format from "date-fns/format";
+import getDay from "date-fns/getDay";
+import parse from "date-fns/parse";
+import startOfWeek from "date-fns/startOfWeek";
+import React, { useState } from "react";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-function ManagerCal() {
-  const [value, onChange] = useState(new Date());
-
-  return (
-    <div>
-      <Calendar onChange={onChange} value={value} />
-    </div>
-  );
+const locales = {
+  "sv-SE": require("date-fns/locale/sv")
 }
+const localizer = dateFnsLocalizer({
+  format,
+  parse, 
+  startOfWeek, 
+  getDay, 
+  locales
+})
+
+const events = [
+
+]
 
 const Manager = () => {
-    return (
-        <div>
-            <h1>Manager</h1>
-            <div>{ManagerCal()}</div>
-            
-        </div>
-    );
+  return (
+      <div>
+          <Calendar localizer={localizer} events = {events} 
+          startAccessor = "start" endAccessor="end" style={{height: 500, margin: "50px"}}
+          />
+          
+      </div>
+  );
 }
 
 export default Manager;
