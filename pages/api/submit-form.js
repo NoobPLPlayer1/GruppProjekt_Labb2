@@ -13,9 +13,9 @@ export default async function handler(req, res) {
 
     try {
 
-        const { date, hour, project, user } = JSON.parse(req.body);
+        const { date, hour, project, user, note } = JSON.parse(req.body); //here i catch everything from form
    
-        await notion.pages.create({
+        await notion.pages.create({ //here i update the timereport table according to data submitted
             parent: {
 
                 database_id: timereportId,
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
                 Project: {
 
                     relation: [{
-                        id: project,
+                        id: project
                     },
                     ],
                 },
@@ -45,9 +45,18 @@ export default async function handler(req, res) {
                 Person: {
 
                     relation: [{
-                        id: user,
+                        id: user
                     },
                     ],
+                },
+
+                Note: {
+                    title: [{
+                        type: "text",
+                        text: {
+                            content: note
+                        },
+                    }],
                 },
             },
 

@@ -18,14 +18,14 @@ function Form(props) {
     const [date, setDate] = useState('');
     const [hour, setHour] = useState('');
     const [project, setProject] = useState('');
-    console.log(props);
+    const [note, setNote] = useState('');
     const user = props.props.user;
 
     const submitForm = async (e) => { //When we click on submit then we will send the result of each field to ourselves
         e.preventDefault();
         const res = await fetch('http://localhost:3000/api/submit-form', {
             method: 'POST',
-            body: JSON.stringify({ date, hour, project, user }), //This is where we send the parameters to our selves like a payload
+            body: JSON.stringify({ date, hour, project, user, note }), //This is where we send the parameters to our selves like a payload
         });
 
         if (res.status === 201) {
@@ -73,6 +73,16 @@ function Form(props) {
 
                     {projectNameDisplay()} {/* Here you show the name of each project from the project list first created */}
                 </select>
+
+                <label htmlFor="note">Note</label>
+                <input
+                    type="text"
+                    id="note"
+                    name="note"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    required
+                />
             </div>
 
             <button className="hej" type="submit">
