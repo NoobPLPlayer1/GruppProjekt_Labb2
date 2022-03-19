@@ -10,6 +10,8 @@ function Table(props) {
             let type = props?.type;
             let value = prompt(name, GetFieldAccess(name,field));
             var obj = {};
+            if(value == null)
+                return undefined;
 
             if(type == "rich_text")
             {
