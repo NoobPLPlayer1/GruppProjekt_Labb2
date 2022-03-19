@@ -2,7 +2,8 @@ import Table from "./Table";
 import { useEffect, useState } from 'react'
 import { QueryDatabase, projectsId, peopleId, timereportId } from '../notion'
 
-function SearchTable({fields, CurrentUser}) {
+function SearchTable({fields, updateFields, CurrentUser}) {
+    const [wasInvalidated, invalidate] = useState({});
     const [database, setDatabase] = useState([]); // Hämtade projekt
     const [items, setItems] = useState([]); // Projekt som visas
     const [filter, setFilter] = useState(undefined); // Filter som användes när vi hämtade projekt (undefined = inget filter)
@@ -30,7 +31,6 @@ function SearchTable({fields, CurrentUser}) {
     async function filterUsers() {
         var items = [];
         var currentUser = user == "Me" ? CurrentUser : user;
-        console.log(currentUser);
         database.forEach((row) => { // Kollar för varje hämtat projekt
             var result = false;
 
@@ -68,7 +68,7 @@ function SearchTable({fields, CurrentUser}) {
                 })
             }
             GetData();
-        }, [filter, sort])
+        }, [filter, sort, wasInvalidated])
         useEffect( // Körs varje gång då antingen användare eller projekt hämtas
             () => {
                 filterUsers();
@@ -125,7 +125,7 @@ function SearchTable({fields, CurrentUser}) {
                     })}
                 </select>
             </form>
-            {<Table fields={fields} database={items} filter={filter} />}
+            {<Table fields={fields} invalidate={invalidate} updateFields={updateFields} database={items} filter={filter} />}
         </div>
     )
 }

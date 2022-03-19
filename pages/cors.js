@@ -18,7 +18,7 @@ export const cors = initMiddleware(
     // You can read more about the available options here: <https://github.com/expressjs/cors#configuration-options>
     Cors({
         origin: true,
-        methods: ["GET", "POST", 'OPTIONS'],
+        methods: ["GET", "POST", "PATCH", 'OPTIONS'],
         credentials: true,
     })
 );

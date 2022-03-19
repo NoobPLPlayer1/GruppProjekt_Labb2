@@ -48,7 +48,7 @@ function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
 
 function ManageHome({ results, CurrentUser }){ // Huvudsidan
     return <div>
-        <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} CurrentUser={CurrentUser} />
+        <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} updateFields={{Hours:true, Projectname:true}} CurrentUser={CurrentUser} />
         <Form props={{results: results, user: CurrentUser}} /> 
     </div>
 }

@@ -1,7 +1,35 @@
 
 import {useEffect, useState} from 'react'
+import {EditPage} from '../notion';
 
 function Table(props) {
+    const CreateUpdateField = (name, field) =>
+    {
+        if(updateFields != undefined && updateFields[name] === true) {
+            let props = field?.properties[name];
+            let type = props?.type;
+            let value = prompt(name, GetFieldAccess(name,field));
+            var obj = {};
+
+            if(type == "rich_text")
+            {
+                obj[name] = { rich_text: [ { text: { content: value } } ] } // HAR INTE TESTATS
+            }
+            if(type == "title"){
+                obj[name] = { title: [ { text: { content: value } } ] }
+            }
+            if(type == "select")
+            {
+                obj[name] = { select: { name: value } } // HAR INTE TESTATS
+            }
+            if(type == "number")
+            {
+                obj[name] = { number: parseInt(value) }
+            }
+            return obj;
+        }
+        return undefined;
+    }
 
     const GetFieldAccess = (name, field) =>
     {
@@ -52,12 +80,10 @@ function Table(props) {
         return "Unknown";
     }
 
-    useEffect(()=> {
-
-    }, [props.database])
-
     let database = props.database;
     let fields = props.fields;
+    let updateFields = props.updateFields;
+    let invalidate = props.invalidate;
 
     return (
         <table>
@@ -72,9 +98,10 @@ function Table(props) {
             <tbody>
             {
                 props.database.map((field) => {
+                    
                     return (<tr key={field.id}>
                         {fields.map(element => {
-                            return (<td key={element}>{GetFieldAccess(element, field)}</td>)
+                            return (<td onClick={() => EditValue(element, field)} key={element}>{GetFieldAccess(element, field)}</td>)
                         })}
                     </tr>)
                 })
@@ -83,6 +110,15 @@ function Table(props) {
             </tbody>
         </table>
     )
+
+    async function EditValue(element, field){
+        var res = CreateUpdateField(element, field)
+        if(res != undefined)
+        {
+            await EditPage(field.id, res);
+            invalidate({});
+        }
+    }
 }
 
 export default Table;
