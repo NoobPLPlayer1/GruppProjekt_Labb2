@@ -1,17 +1,19 @@
 import {useState, useEffect} from 'react'
 import { QueryDatabase } from './notion'
 import SearchTable from './components/SearchTable';
-import Form from "./components/Form"; './components/Form.js'
+import Timereport from "./components/Timereport"; './components/Timereport.js'
+import TimeChart from "./components/TimeChart"; './components/TimeChart.js'
 import { notion, projectsId } from './notion';
 
-
 export default function Home({ CurrentUser, SetCurrentUser, results }) {
-    return  <>{ (CurrentUser == "Signed out" ? <LoginHome SetCurrentUser={SetCurrentUser}/> : <ManageHome results={results} CurrentUser={CurrentUser} />) }</>
+    return <>{
+        (CurrentUser == "Signed out" ? <LoginHome SetCurrentUser={SetCurrentUser} /> :
+            <ManageHome results={results} CurrentUser={CurrentUser} />)} </>
 }
 
 function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
     const [users, setUsers] = useState([]); // Hämtade giltiga användare
-
+    
     useEffect( // Körs när sidan laddas
         () => {
 
@@ -38,8 +40,11 @@ function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
                 <option value={"Signed out"}>
                     Signed out
                 </option>
-                {users.map((user) => {
-                    return <option key={user.id} value={user.id}>{user.properties.Name.title[0].plain_text}</option>
+                    {users.map((user) => {
+                        
+                        return <option key={user.id} value={user.id}>{user.properties.Name.title[0].plain_text}</option>
+                        
+                   
                 })}
             </select>
         </form>
@@ -47,10 +52,15 @@ function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan
 }
 
 function ManageHome({ results, CurrentUser }){ // Huvudsidan
-    return <div>
-        <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} updateFields={{Hours:true, Projectname:true}} CurrentUser={CurrentUser} />
-        <Form props={{results: results, user: CurrentUser}} /> 
-    </div>
+    return (
+        <div>
+
+            <SearchTable fields={["Projectname", "Status", "Hours", "Worked hours", "Hours left", "Timespan"]} updateFields={{ Hours: true, Projectname: true }} CurrentUser={CurrentUser} />
+            <Timereport props={{ results: results, user: CurrentUser }} />
+            <TimeChart props={{ results: results, user: CurrentUser }} />
+            
+        </div>
+    )
 }
 
 export async function getServerSideProps() {
