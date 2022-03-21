@@ -87,13 +87,35 @@ function Table(props) {
     let updateFields = props.updateFields;
     let invalidate = props.invalidate;
 
+    useEffect(() => {
+        let list = [];
+        fields.forEach(element => {
+            list.push({
+                property: element,
+                direction: "ascending"
+            })
+        });
+        props.setSort(list);
+    },[])
+
+    function setSortOn(name)
+    {
+        var index = props.sort.findIndex((prop) => prop.property == name)
+        var ascend = index != 0 || props.sort[index].direction == "descending";
+
+        props.sort.splice(index, 1);
+        props.sort.unshift({ property: name, direction: (ascend ? "ascending" : "descending") })
+        let list = [...props.sort]; // Måste kopiera så att react fattar att det måste hämtas data
+        props.setSort(list);
+    }
+
     return (
         <table>
             <thead>
                 <tr>
                     {fields.map(element => {
 
-                        return (<th key={element}>{element}</th>)
+                        return (<th key={element} onClick={(e) => setSortOn(element)}>{element}</th>)
                     })}
                 </tr>
             </thead>

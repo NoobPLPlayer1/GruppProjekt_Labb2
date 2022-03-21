@@ -23,7 +23,10 @@ export async function QueryDatabase(database, filter, sort, callback){
     if (res.status === 201) {
         callback(result);
     } else {
-        console.log("rip");
+        console.log(database);
+        console.log(filter);
+        console.log(sort);
+        console.log(result);
     }
 }
 

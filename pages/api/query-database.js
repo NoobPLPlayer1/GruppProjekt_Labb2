@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         const response = await notion.databases.query({
             database_id: database,
             filter: filter,
-            sort: sort,
+            sorts: sort,
         });
         res.status(201).json(response.results); 
     } catch (error) {

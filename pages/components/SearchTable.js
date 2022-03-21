@@ -4,7 +4,7 @@ import { QueryDatabase, projectsId, peopleId, timereportId } from '../notion'
 
 function SearchTable({fields, updateFields, CurrentUser}) {
     const [wasInvalidated, invalidate] = useState({});
-    const [database, setDatabase] = useState([]); // Hämtade projekt
+    const [database, setProjects] = useState([]); // Hämtade projekt
     const [items, setItems] = useState([]); // Projekt som visas
     const [filter, setFilter] = useState(undefined); // Filter som användes när vi hämtade projekt (undefined = inget filter)
     const [sort, setSort] = useState(undefined); // Sorteringen som användes när vi hämtade projekt (undefined = ingen sorteringen)
@@ -61,18 +61,19 @@ function SearchTable({fields, updateFields, CurrentUser}) {
                 await Promise.all([
                     QueryDatabase(timereportId, undefined, undefined, setTimereports),
                     QueryDatabase(peopleId, undefined, undefined, setUsers),
-                    QueryDatabase(projectsId, filter, sort, setDatabase)
+                    QueryDatabase(projectsId, filter, sort, setProjects)
                 ]);
                 users.forEach((p) => {
                     userNames[p.id] = p.properties.Name.title[0].plain_text;
                 })
             }
             GetData();
-        }, [filter, sort, wasInvalidated])
+        }, [filter, sort, setSort, wasInvalidated])
         useEffect( // Körs varje gång då antingen användare eller projekt hämtas
             () => {
                 filterUsers();
-            }, [user, users, timereports, database, CurrentUser])
+                console.log("ASD");
+            }, [user, users, timereports, database, sort, CurrentUser])
 
 
     return (
@@ -125,7 +126,7 @@ function SearchTable({fields, updateFields, CurrentUser}) {
                     })}
                 </select>
             </form>
-            {<Table fields={fields} invalidate={invalidate} updateFields={updateFields} database={items} filter={filter} />}
+            {<Table fields={fields} invalidate={invalidate} updateFields={updateFields} database={items} filter={filter} sort={sort} setSort={setSort} />}
         </div>
     )
 }
