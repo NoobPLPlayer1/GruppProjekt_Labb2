@@ -72,7 +72,6 @@ function SearchTable({fields, updateFields, CurrentUser}) {
         useEffect( // Körs varje gång då antingen användare eller projekt hämtas
             () => {
                 filterUsers();
-                console.log("ASD");
             }, [user, users, timereports, database, sort, CurrentUser])
 
 

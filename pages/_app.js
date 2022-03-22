@@ -3,7 +3,7 @@ import Layout from './components/Layout'
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { QueryDatabase } from './notion'
-
+const projektledare = "d881c32a-394d-465d-a86f-6b4d4fa9939c";
 
 function MyApp({ Component, pageProps }) {
     const [currentUser, setCurrentUser] = useState("Signed out"); // Hämtade giltiga användare

@@ -11,7 +11,7 @@ function TimeChart(props) {
         hours.push(project.properties.Hours.number);
         worked_hours.push(project.properties["Worked hours"].rollup.number);
     })
-    const colors = worked_hours.map((value, index) => value < hours[index] / 2 ? 'rgba(0,200,0)' : 'rgba(255,0,0)');
+    const colors = worked_hours.map((value, index) => value < hours[index] * 0.8 ? 'rgba(0,200,0)' : 'rgba(255,0,0)');
  
 
 
