@@ -1,7 +1,6 @@
 import { useState } from "react";
 function Timereport(props) {
 
-    console.log(props);
     const projectNameDisplay = () => { //save in a list different options which contains name and id of each project
         
         let projectnames = [];
