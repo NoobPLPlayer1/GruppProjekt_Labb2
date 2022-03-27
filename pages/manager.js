@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { QueryDatabase , timereportId, peopleId , projectsId} from "./notion";
-
+import ManagerCSS from "../styles/Manager.module.css";
 
 function Manager() {
 
@@ -46,8 +46,9 @@ function Manager() {
     GetData();
     }, []);
   return (
-      <div>
-        <form>
+      <div className={ManagerCSS.content}>
+        <h1>Schedule</h1>
+        <form className={ManagerCSS.datepicker}>
           <input
             type="date"
             id="start_datum"
@@ -67,7 +68,7 @@ function Manager() {
             required
           />
         </form>
-        <table>
+        <table className={ManagerCSS.table}>
           <thead>
             <tr>
               <th>
@@ -87,7 +88,7 @@ function Manager() {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={ManagerCSS.tableBody}>
             {
               events.map((item) => {
                 return (
