@@ -47,8 +47,11 @@ function Manager() {
     }, []);
   return (
       <div className={ManagerCSS.content}>
+
         <h1>Schedule</h1>
+        
         <form className={ManagerCSS.datepicker}>
+        <label for="start_datum">From:</label>
           <input
             type="date"
             id="start_datum"
@@ -58,6 +61,7 @@ function Manager() {
             onChange={(e) => setStartDate(e.target.value)}
             required
           />
+          <label for="slut_datum">To:</label>
           <input
             type="date"
             id="slut_datum"
@@ -68,7 +72,7 @@ function Manager() {
             required
           />
         </form>
-        <table className={ManagerCSS.table}>
+        {events.length > 0 ?(<table className={ManagerCSS.table}>
           <thead>
             <tr>
               <th>
@@ -102,7 +106,7 @@ function Manager() {
               })
             }
           </tbody>
-        </table>
+        </table>):<p>No reports found</p>}
       </div>
   );
 }
