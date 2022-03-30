@@ -37,9 +37,9 @@ function Timereport(props) {
 
     return (
         <form className="form" onSubmit={submitForm}> {/*when we click on submit then run function submitForm above*/}
-            <h1 className="form-headline">Rapportera tid</h1>
+            <h1 className="form-headline">Report time</h1>
             <div>
-                <label htmlFor="date">Skriv in datum</label>
+                <label htmlFor="date">Select date</label>
                 <input
                     type="date"
                     id="datum"
@@ -50,7 +50,7 @@ function Timereport(props) {
                     required
                 />
 
-                <label htmlFor="hour">Antal timmar</label>
+                <label htmlFor="hour">Hours</label>
                 <input
                     type="number"
                     id="tid"
@@ -60,7 +60,7 @@ function Timereport(props) {
                     required
                 />
 
-                <label htmlFor="project">Choose projekt</label>
+                <label htmlFor="project">Choose project</label>
                 <select
                     name="projektnamn"
                     id="projektnamn"

@@ -10,6 +10,10 @@ function Manager() {
   const [projects, setProjects] = useState([]);
   const [startDate, setStartDate] = useState(new Date().toISOString().slice(0,10));
   const [endDate, setEndDate] = useState(new Date().toISOString().slice(0,10));
+  const [total, setTotal] = useState(0);
+  let result = 0;
+
+
   useEffect(()=>{
     const userNames = {};
       users.forEach((p) => {
@@ -31,8 +35,15 @@ function Manager() {
             notes: p.properties.Note.title[0].plain_text,
             hours: p.properties.Hours.number,
           })
-        }
+          //sum of timereport
+          setTotal(list.reduce((setCount, obj) => {
+            return setCount + obj.hours;
+          }, 0));
+          console.log(result);
+        };
+        
       });
+      
       setEvents(list);
   },[timereports, users, startDate, endDate]);
   useEffect(() => {
@@ -45,7 +56,8 @@ function Manager() {
     }
     GetData();
     }, []);
-  return (
+    
+    return (
       <div className={ManagerCSS.content}>
 
         <h1>Schedule</h1>
@@ -106,7 +118,9 @@ function Manager() {
               })
             }
           </tbody>
+          <p>Total hours: {total}</p>
         </table>):<p>No reports found</p>}
+        
       </div>
   );
 }
