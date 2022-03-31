@@ -1,6 +1,8 @@
 import Table from "./Table";
 import { useEffect, useState } from 'react'
 import { QueryDatabase, projectsId, peopleId, timereportId } from '../notion'
+import HomeCSS from "/styles/Home.module.css";
+
 
 function SearchTable({fields, updateFields, CurrentUser}) {
     const [wasInvalidated, invalidate] = useState({});
@@ -79,7 +81,7 @@ function SearchTable({fields, updateFields, CurrentUser}) {
         <div>
             <form>
                 <label htmlFor="status">Show Status: </label>
-                <select
+                <select className={HomeCSS.status1}
                     name="status"
                     id="status"
                     value={status}
@@ -102,7 +104,8 @@ function SearchTable({fields, updateFields, CurrentUser}) {
             </form>
             <form>
                 <label htmlFor="user">Show User: </label>
-                <select
+                <select className={HomeCSS.status2}
+
                     name="user"
                     id="user"
                     value={user}

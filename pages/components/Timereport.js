@@ -1,4 +1,5 @@
 import { useState } from "react";
+import HomeCSS from "/styles/Home.module.css";
 function Timereport(props) {
 
     const projectNameDisplay = () => { //save in a list different options which contains name and id of each project
@@ -36,10 +37,11 @@ function Timereport(props) {
     };
 
     return (
-        <form className="form" onSubmit={submitForm}> {/*when we click on submit then run function submitForm above*/}
+        
+        <form className={HomeCSS.form} onSubmit={submitForm}> {/*when we click on submit then run function submitForm above*/}
             <h1 className="form-headline">Report time</h1>
-            <div>
-                <label htmlFor="date">Select date</label>
+            <div className={HomeCSS.menu}>
+                <label htmlFor="date">Select date:</label>
                 <input
                     type="date"
                     id="datum"
@@ -50,7 +52,7 @@ function Timereport(props) {
                     required
                 />
 
-                <label htmlFor="hour">Hours</label>
+                <label htmlFor="hour">Hours:</label>
                 <input
                     type="number"
                     id="tid"
@@ -60,7 +62,7 @@ function Timereport(props) {
                     required
                 />
 
-                <label htmlFor="project">Choose project</label>
+                <label htmlFor="project">Choose project:</label>
                 <select
                     name="projektnamn"
                     id="projektnamn"
@@ -74,7 +76,7 @@ function Timereport(props) {
                     {projectNameDisplay()} {/* Here you show the name of each project from the project list first created */}
                 </select>
 
-                <label htmlFor="note">Note</label>
+                <label htmlFor="note">Note:</label>
                 <input
                     type="text"
                     id="note"
@@ -85,7 +87,7 @@ function Timereport(props) {
                 />
             </div>
 
-            <button className="form-button" type="submit">
+            <button className={HomeCSS.formButton} type="submit">
                 Submit
             </button>
         </form>

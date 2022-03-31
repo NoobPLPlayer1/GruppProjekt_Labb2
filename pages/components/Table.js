@@ -1,6 +1,8 @@
 
 import {useEffect, useState} from 'react'
 import {EditPage} from '../notion';
+import HomeCSS from "/styles/Home.module.css";
+
 
 function Table(props) {
     const CreateUpdateField = (name, field) =>
@@ -110,7 +112,7 @@ function Table(props) {
     }
 
     return (
-        <table>
+        <table className={HomeCSS.table}>
             <thead>
                 <tr>
                     {fields.map(element => {

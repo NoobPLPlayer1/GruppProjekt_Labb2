@@ -19,6 +19,76 @@
     text-align: center;
 }
 
+.status1{
+  margin: 0 2px;
+  border-radius: 5px;
+}
+.status2{
+  margin: 0 15px;
+  border-radius: 5px;
+
+}
+
+
+.table{
+  width: max-content;
+  font-size: 18px;
+  border-radius: 20%;
+  margin: auto;
+  padding: auto;
+  margin-top: 1rem;
+}
+.table th{
+  background-color: #4989ff60;
+  border:1px inset rgba(119, 119, 119, 0.5);
+  text-align: center;
+}
+.table tbody td{
+  background-color: whitesmoke;
+  border:1px inset rgba(119, 119, 119, 0.5);
+  padding: 2rem;
+  text-align: center;
+}
+
+
+.form{
+  border:1px inset rgba(119, 119, 119, 0.5);
+  border-radius: 10px;
+  max-width: 500px;
+  padding-bottom: 2rem;
+  margin: 2rem 0;
+  margin-left: 25%;
+  
+}
+.form h1{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.menu label{
+  width: 170px;
+  display: inline-block;
+  margin-left: 25%;
+}
+.menu input{
+  max-width: 130px;
+  margin: 10px -50px;
+  border-radius: 4px;
+}
+.menu select{
+  max-width: 130px;
+  margin: 10px -50px;
+  border-radius: 4px;
+  
+}
+.formButton{
+  padding: 5px 20px;
+  border-radius: 10px;
+  margin-left: 50%;
+  background-color: #4989ff60;
+  font-weight: bolder;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
