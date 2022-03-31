@@ -1,8 +1,11 @@
 import '../styles/globals.css'
+import { UserProvider } from '@auth0/nextjs-auth0';
 import Layout from './components/Layout'
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { QueryDatabase } from './notion'
+
+
 const projektledare = "d881c32a-394d-465d-a86f-6b4d4fa9939c";
 
 function MyApp({ Component, pageProps }) {
@@ -10,7 +13,7 @@ function MyApp({ Component, pageProps }) {
     useEffect( // Körs varje gång då antingen användare ändras
         () => {
         }, [currentUser])
-    return (<>{
+    return (<UserProvider>{
         (currentUser == "Signed out" ? 
             <Layout>
                 <Head>
@@ -32,7 +35,7 @@ function MyApp({ Component, pageProps }) {
                 <Component {...pageProps} CurrentUser={currentUser} SetCurrentUser={setCurrentUser} />
 
             </Layout>)} 
-            </>)
+            </UserProvider>)
 }
 
 function LoginHome({ CurrentUser, SetCurrentUser }){ // Login sidan

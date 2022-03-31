@@ -1,3 +1,7 @@
+
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+
+
 const About = () => {
     return (
         <div>
@@ -8,4 +12,4 @@ const About = () => {
     );
 }
 
-export default About;
+export const getServerSideProps=withPageAuthRequired();

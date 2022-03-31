@@ -11,8 +11,6 @@ export default function Home({ CurrentUser, SetCurrentUser, results }) {
     return <ManageHome results={results} CurrentUser={CurrentUser} />
 }
 
-
-
 function ManageHome({ results, CurrentUser }){ // Huvudsidan
     return (
         <div>

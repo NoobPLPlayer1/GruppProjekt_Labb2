@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.7.0",
     "@notionhq/client": "^1.0.1",
     "chart.js": "^3.7.1",
     "cors": "^2.8.5",
